@@ -1,4 +1,11 @@
 const criptoMonedasSelect = document.querySelector('#criptomonedas')
+const monedasSelect = document.querySelector('#moneda')
+const formulario = document.querySelector('#formulario')
+
+const objBusqueda = {
+    moneda : '',
+    criptomoneda:''
+}
 
 //crear promise
 
@@ -8,6 +15,11 @@ const obtenerCriotomonedas = criptomonedas => new Promise(resolve =>{
 
 document.addEventListener('DOMContentLoaded',() =>{
     consultarCriptoMonedas()
+
+    formulario.addEventListener('submit',submitFormulario)
+
+    criptoMonedasSelect.addEventListener('change',leerValor)
+    monedasSelect.addEventListener('change',leerValor)
 })
 
 function consultarCriptoMonedas(){
@@ -30,4 +42,26 @@ function selectCriptoMonedas(criptomonedas){
         option.textContent = FullName
         criptoMonedasSelect.appendChild(option)
     });
+}
+
+function leerValor(e){
+    objBusqueda[e.target.name] = e.target.value
+    console.log(objBusqueda)
+
+}
+
+function submitFormulario(e){
+    e.preventDefault();
+
+    //Validar
+    const {moneda,criptomoneda} = objBusqueda
+
+    if(moneda === '' || criptomoneda === ''){
+        mostrarAlerta('Ambos Campos son Obligatorios');
+        return;
+    }
+}
+
+function mostrarAlerta(mensaje){
+    console.log(mensaje)
 }
